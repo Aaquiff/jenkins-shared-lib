@@ -20,12 +20,12 @@
 def call(Map config) {
   def productVersion = "${config.PRODUCT}-${config.VERSION}"
   sh """
-    wum init -u ${config.WSO2_USERNAME} -p ${config.WSO2_PASSWORD}
-    if wum list | grep ${productVersion}-; 
+    wum init -u "${config.WSO2_USERNAME}" -p "${config.WSO2_PASSWORD}"
+    if wum list | grep "${productVersion}"; 
     then 
         echo "${productVersion} already exists"; 
     else 
-        wum add ${productVersion} -y
+        wum add "${productVersion}" -y
         echo "added ${productVersion}"; 
     fi;
   """
