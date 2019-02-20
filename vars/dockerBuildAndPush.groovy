@@ -18,7 +18,7 @@
 */
 
 def call(Map config) {
-  dir(cofig.CONTEXT) {
+  dir(config.CONTEXT) {
     sh """
       docker build -t ${config.IMAGE} .
       docker push ${config.IMAGE}
