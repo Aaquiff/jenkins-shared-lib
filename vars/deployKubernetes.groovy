@@ -20,7 +20,7 @@
 def call(Map config) {
   dir("${config.KUBERNETES_DIR}") {
     sh """
-      sed 's|<TEST_ENDPOINT>|${config.TEST_ENDPOINT}|' nginx-proxy/nginx-template.conf > ../nginx-proxy/nginx.conf
+      sed 's|<TEST_ENDPOINT>|${config.TEST_ENDPOINT}|' nginx-proxy/nginx-template.conf > nginx-proxy/nginx.conf
       sed -i 's|<IMAGE_NAME>|${config.IMAGE_NAME}|' integrator-deployment.yaml
     """
     dir("scripts") {
