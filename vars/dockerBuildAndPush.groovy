@@ -17,9 +17,11 @@
 * under the License.
 */
 
-def call(String imageName) {
-  sh """
-    docker build -t ${imageName} .
-    docker push ${imageName}
-  """
+def call(Map config) {
+  dir(cofig.CONTEXT) {
+    sh """
+      docker build -t ${config.IMAGE} .
+      docker push ${config.IMAGE}
+    """
+  }
 }
