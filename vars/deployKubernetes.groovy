@@ -17,12 +17,14 @@
 * under the License.
 */
 
-def call(String imageName, String environment, String testEndpoint) {
-  dir("kubernetes/scripts") {
+def call(Map config) {
+  dir("${config.KUBERNETES_DIR}") {
     sh """
-      sed 's|<TEST_ENDPOINT>|${testEndpoint}|' ../nginx-proxy/nginx-template.conf > ../nginx-proxy/nginx.conf
-      sed -i 's|<IMAGE_NAME>|${imageName}|' ../integrator-deployment.yaml
-      ./deploy.sh ${environment}
+      sed 's|<TEST_ENDPOINT>|${config.TEST_ENDPOINT}|' ../nginx-proxy/nginx-template.conf > ../nginx-proxy/nginx.conf
+      sed -i 's|<IMAGE_NAME>|${config.IMAGE_NAME}|' ../integrator-deployment.yaml
     """
+    dir("scripts") {
+      sh "./deploy.sh ${config.ENVIRONMENT}"
+    }
   }
 }
