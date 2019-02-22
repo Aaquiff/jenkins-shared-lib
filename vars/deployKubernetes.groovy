@@ -20,11 +20,10 @@
 def call(Map config) {
   dir("${config.KUBERNETES_DIR}") {
     sh """
-      sed 's|<TEST_ENDPOINT>|${config.TEST_ENDPOINT}|' nginx-proxy/nginx-template.conf > nginx-proxy/nginx.conf
-      sed -i 's|<IMAGE_NAME>|${config.IMAGE_NAME}|' integrator-deployment.yaml
+      sed -i 's|<IMAGE>|${config.IMAGE_NAME}|' values.yaml
+      sed -i 's|<ENVIRONMENT>|${config.ENVIRONMENT}|' values.yaml
+      sed -i 's|<NAMESPACE>|wso2-${config.ENVIRONMENT}|' values.yaml
+      helm upgrade --name wso2ei-${config.ENVIRONMENT} --namespace wso2-${config.ENVIRONMENT} --install
     """
-    dir("scripts") {
-      sh "./deploy.sh ${config.ENVIRONMENT}"
-    }
   }
 }
