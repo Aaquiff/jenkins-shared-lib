@@ -23,7 +23,7 @@ def call(Map config) {
       sed -i 's|<IMAGE>|${config.IMAGE_NAME}|' values.yaml
       sed -i 's|<ENVIRONMENT>|${config.ENVIRONMENT}|' values.yaml
       sed -i 's|<NAMESPACE>|wso2-${config.ENVIRONMENT}|' values.yaml
-      helm upgrade wso2ei-${config.ENVIRONMENT} . --namespace wso2-${config.ENVIRONMENT} --install
+      helm upgrade wso2ei-${config.ENVIRONMENT} . --namespace wso2-${config.ENVIRONMENT} --install --wait
     """
   }
 }
