@@ -18,7 +18,7 @@
 */
 
 def call(Map config) {
-  dir("${config.KUBERNETES_DIR}/scripts") {
-    sh "./undeploy.sh ${config.ENVIRONMENT}"
+  dir("${config.KUBERNETES_DIR}") {
+    sh "helm delete --purge wso2ei-${config.ENVIRONMENT}"
   }
 }
