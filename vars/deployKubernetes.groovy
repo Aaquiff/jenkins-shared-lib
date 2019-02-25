@@ -20,8 +20,8 @@
 def call(Map config) {
   dir("${config.KUBERNETES_DIR}") {
     sh """
-      sed -i 's|<IMAGE>|${config.IMAGE_NAME}|' values-${config.ENVIRONMENT}.yaml
-      helm upgrade -f values-${config.ENVIRONMENT}.yaml wso2ei-${config.ENVIRONMENT} . --namespace wso2-${config.ENVIRONMENT} --install
+      # sed -i 's|<IMAGE>|${config.IMAGE_NAME}|' values-${config.ENVIRONMENT}.yaml
+      helm upgrade -f values-${config.ENVIRONMENT}.yaml --set image=${config.IMAGE_NAME} wso2ei-${config.ENVIRONMENT} . --namespace wso2-${config.ENVIRONMENT} --install
     """
   }
 }
