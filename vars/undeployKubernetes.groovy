@@ -19,6 +19,6 @@
 
 def call(Map config) {
   dir("${config.KUBERNETES_DIR}") {
-    sh "helm delete wso2ei-${config.ENVIRONMENT} --purge"
+    sh "helm delete ${config.HELM_RELEASE_NAME} --purge"
   }
 }

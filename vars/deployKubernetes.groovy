@@ -18,7 +18,7 @@
 */
 
 def call(Map config) {
-  dir("${config.KUBERNETES_DIR}") {
-    sh "helm upgrade -f values-${config.ENVIRONMENT}.yaml --set image=${config.IMAGE_NAME} wso2ei-${config.ENVIRONMENT} . --namespace wso2-${config.ENVIRONMENT} --install"
+  dir("${config.HELM_DIR}") {
+    sh "helm upgrade -f ${config.HELM_VALUES_FILE} --set image=${config.IMAGE_NAME} ${config.HELM_RELEASE_NAME} . --namespace ${config.NAMESPACE} --install"
   }
 }
