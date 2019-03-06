@@ -28,6 +28,6 @@ def call(Map config) {
         wum add "${productVersion}" -y
         echo "added ${productVersion}"; 
     fi;
-    wum update
+    wum update ${productVersion}
   """
 }
