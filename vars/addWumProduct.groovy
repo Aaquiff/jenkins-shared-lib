@@ -53,7 +53,7 @@ String call(Map config) {
   """
 
   def timestamp = sh (
-    script: "${WUM} describe ${PRODUCT}-${PRODUCT_VERSION}  | grep Filename: | awk -F'[+]' '{print \$2}' | awk -F'.' '{print \$1}'",
+    script: "${WUM} describe ${PRODUCT}-${PRODUCT_VERSION}  | grep Filename: | awk -F'[+]' '{print \$2}' | sed s'|.zip||' ",
     returnStdout: true).trim()
 
   sh """
