@@ -39,46 +39,15 @@ def call(Map config) {
   def FAILED_RM_UNZIP=16
 
   sh """
-    echo "Adding the product - ${PRODUCT}-${PRODUCT_VERSION}..." &>> wum.log
     ${WUM} add ${PRODUCT}-${PRODUCT_VERSION} -y &>> wum.log
-    if [ $? -eq 0 ] ; then
-      echo "${PRODUCT}-${PRODUCT_VERSION} successfully added..." &>> wum.log
-    else
-      if [ $? -ne 1 ] ; then
-        exit ${FAILED_WUM_ADD}
-      fi
-    fi
     
-    echo "Get latest updates for the product - ${PRODUCT}-${PRODUCT_VERSION}..." &>> wum.log
     ${WUM} update ${PRODUCT}-${PRODUCT_VERSION} ${CHANNEL} &>> wum.log
-    if [ \$? -eq 0 ] ; then
-      echo "${PRODUCT}-${PRODUCT_VERSION} successfully updated..." &>> wum.log
-    else
-      if [ \$? -eq 1 ] ; then
-        exit ${FAILED_WUM_UPDATE}
-      fi
-    fi
 
-    echo "Moving the WUM updated product..." &>> wum.log
     ${MV} ${WUM_PRODUCT_HOME}/${PRODUCT}/${PRODUCT_VERSION}/${CHANNEL}/${PRODUCT}-${PRODUCT_VERSION}*.zip ${PACK_DEST}/${PRODUCT}-${PRODUCT_VERSION}.zip
-    if [ \$? -ne 0 ] ; then
-      echo "Failed to move the WUM updated product from ${WUM_PRODUCT_HOME}/${PRODUCT}/${PRODUCT_VERSION}/${CHANNEL} to ${PACK_DEST}..."
-      exit ${FAILED_TO_MOVE_WUMMED_PRODUCT}
-    fi
 
-    echo "Unzip the WUM updated product..." &>> wum.log
     ${UNZIP} -o -q ${PACK_DEST}/${PRODUCT}-${PRODUCT_VERSION}.zip -d ${PACK_DEST}/
-    if [ \$? -ne 0 ] ; then
-      echo "Failed to unzip the WUM updated product ${PRODUCT}-${PRODUCT_VERSION}..."
-      ${FAILED_UNZIP}
-    fi
 
-    echo "Remove the zipped product..." &>> wum.log
     ${RM} ${PACK_DEST}/${PRODUCT}-${PRODUCT_VERSION}.zip
-    if [ \$? -ne 0 ] ; then
-      echo "Failed to remove the zipped product ${PRODUCT}-${PRODUCT_VERSION}..."
-      exit ${FAILED_RM_UNZIP}
-    fi
   """
 
 }
