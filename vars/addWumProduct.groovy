@@ -49,8 +49,8 @@ def call(Map config) {
     fi;
     
     echo "Updating ${PRODUCT}-${PRODUCT_VERSION}"
-    ${WUM} update ${PRODUCT}-${PRODUCT_VERSION} ${CHANNEL} &>> wum.log
-    
+    ${WUM} update ${PRODUCT}-${PRODUCT_VERSION} ${CHANNEL}
+
     ${MV} ${WUM_PRODUCT_HOME}/${PRODUCT}/${PRODUCT_VERSION}/${CHANNEL}/${PRODUCT}-${PRODUCT_VERSION}*.zip ${PACK_DEST}/${PRODUCT}-${PRODUCT_VERSION}.zip
     ${UNZIP} -o -q ${PACK_DEST}/${PRODUCT}-${PRODUCT_VERSION}.zip -d ${PACK_DEST}/
     ${RM} ${PACK_DEST}/${PRODUCT}-${PRODUCT_VERSION}.zip
