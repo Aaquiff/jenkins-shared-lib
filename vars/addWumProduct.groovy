@@ -40,13 +40,17 @@ def call(Map config) {
 
   sh """
     ${WUM} add ${PRODUCT}-${PRODUCT_VERSION} -y &>> wum.log
+
     if ${WUM} describe ${PRODUCT}-${PRODUCT_VERSION}; 
     then 
-      echo "already exists"; 
+      echo "${PRODUCT}-${PRODUCT_VERSION} already exists"; 
     else 
-      wum ${WUM} ${PRODUCT}-${PRODUCT_VERSION} 
+      wum ${WUM} add ${PRODUCT}-${PRODUCT_VERSION} 
     fi;
+    
+    echo "Updating ${PRODUCT}-${PRODUCT_VERSION}"
     ${WUM} update ${PRODUCT}-${PRODUCT_VERSION} ${CHANNEL} &>> wum.log
+    
     ${MV} ${WUM_PRODUCT_HOME}/${PRODUCT}/${PRODUCT_VERSION}/${CHANNEL}/${PRODUCT}-${PRODUCT_VERSION}*.zip ${PACK_DEST}/${PRODUCT}-${PRODUCT_VERSION}.zip
     ${UNZIP} -o -q ${PACK_DEST}/${PRODUCT}-${PRODUCT_VERSION}.zip -d ${PACK_DEST}/
     ${RM} ${PACK_DEST}/${PRODUCT}-${PRODUCT_VERSION}.zip
