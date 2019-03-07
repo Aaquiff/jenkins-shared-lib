@@ -62,5 +62,5 @@ String call(Map config) {
     ${RM} ${PACK_DEST}/${PRODUCT}-${PRODUCT_VERSION}.zip
   """
 
-  return timestamp;
+  return ${timestamp};
 }
