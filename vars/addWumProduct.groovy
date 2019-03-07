@@ -17,7 +17,7 @@
 * under the License.
 */
 
-def call(Map config) {
+String call(Map config) {
   
   def WUM = "wum"
   def MV="mv"
@@ -50,10 +50,17 @@ def call(Map config) {
     
     echo "Updating ${PRODUCT}-${PRODUCT_VERSION}"
     ${WUM} update ${PRODUCT}-${PRODUCT_VERSION} ${CHANNEL}
+  """
 
+  def timestamp = sh (
+    script: "${WUM} describe ${PRODUCT}-${PRODUCT_VERSION}  | grep Filename: | awk -F'[+]' '{print $2}' | awk -F'.' '{print $1}'",
+    returnStdout: true).trim()
+
+  sh """
     ${MV} ${WUM_PRODUCT_HOME}/${PRODUCT}/${PRODUCT_VERSION}/${CHANNEL}/${PRODUCT}-${PRODUCT_VERSION}*.zip ${PACK_DEST}/${PRODUCT}-${PRODUCT_VERSION}.zip
     ${UNZIP} -o -q ${PACK_DEST}/${PRODUCT}-${PRODUCT_VERSION}.zip -d ${PACK_DEST}/
     ${RM} ${PACK_DEST}/${PRODUCT}-${PRODUCT_VERSION}.zip
   """
 
+  return timestamp;
 }
