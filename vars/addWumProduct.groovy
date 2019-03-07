@@ -40,31 +40,31 @@ def call(Map config) {
         echo "added ${PRODUCT}-${PRODUCT_VERSION}"; 
     fi;
     
-    echo "Get latest updates for the product - ${PRODUCT}-${PRODUCT_VERSION}..." \&>> wum.log
-    ${WUM} update ${PRODUCT}-${PRODUCT_VERSION} ${CHANNEL} \&>> wum.log
+    echo "Get latest updates for the product - ${PRODUCT}-${PRODUCT_VERSION}..." &>> wum.log
+    ${WUM} update ${PRODUCT}-${PRODUCT_VERSION} ${CHANNEL} &>> wum.log
     if [ \$? -eq 0 ] ; then
-      echo "${PRODUCT}-${PRODUCT_VERSION} successfully updated..." \&>> wum.log
+      echo "${PRODUCT}-${PRODUCT_VERSION} successfully updated..." &>> wum.log
     else
       if [ \$? -eq 1 ] ; then
         exit 1
       fi
     fi
 
-    echo "Moving the WUM updated product..." \&>> wum.log
+    echo "Moving the WUM updated product..." &>> wum.log
     ${MV} ${WUM_PRODUCT_HOME}/${PRODUCT}/${PRODUCT_VERSION}/${CHANNEL}/${PRODUCT}-${PRODUCT_VERSION}*.zip ${PACK_DEST}/${PRODUCT}-${PRODUCT_VERSION}.zip
     if [ \$? -ne 0 ] ; then
       echo "Failed to move the WUM updated product from ${WUM_PRODUCT_HOME}/${PRODUCT}/${PRODUCT_VERSION}/${CHANNEL} to ${PACK_DEST}..."
       exit 1
     fi
 
-    echo "Unzip the WUM updated product..." \&>> wum.log
+    echo "Unzip the WUM updated product..." &>> wum.log
     ${UNZIP} -q ${PACK_DEST}/${PRODUCT}-${PRODUCT_VERSION}.zip -d ${PACK_DEST}/${DEPLOYMENT_PATTERN}/
     if [ \$? -ne 0 ] ; then
       echo "Failed to unzip the WUM updated product ${PRODUCT}-${PRODUCT_VERSION}..."
       exit 1
     fi
 
-    echo "Remove the zipped product..." \&>> wum.log
+    echo "Remove the zipped product..." &>> wum.log
     ${RM} ${PACK_DEST}/${PRODUCT}-${PRODUCT_VERSION}.zip
     if [ \$? -ne 0 ] ; then
       echo "Failed to remove the zipped product ${PRODUCT}-${PRODUCT_VERSION}..."
