@@ -58,7 +58,7 @@ def call(Map config) {
     fi
 
     echo "Unzip the WUM updated product..." &>> wum.log
-    ${UNZIP} -q ${PACK_DEST}/${PRODUCT}-${PRODUCT_VERSION}.zip -d ${PACK_DEST}/
+    ${UNZIP} -o -q ${PACK_DEST}/${PRODUCT}-${PRODUCT_VERSION}.zip -d ${PACK_DEST}/
     if [ \$? -ne 0 ] ; then
       echo "Failed to unzip the WUM updated product ${PRODUCT}-${PRODUCT_VERSION}..."
       exit 1
