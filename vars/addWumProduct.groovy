@@ -30,17 +30,17 @@ def call(Map config) {
   def WUM_PRODUCT_HOME="${config.WUM_PRODUCT_HOME}"
   def PACK_DEST="${config.PACK_DEST}"
 
-  FAILED_WUM_UPDATE=10
-  FAILED_WUM_ADD=11
-  FAILED_INPLACE_UPDATES=12
-  FAILED_PUPPET_APPLY=13
-  FAILED_TO_MOVE_WUMMED_PRODUCT=14
-  FAILED_UNZIP=15
-  FAILED_RM_UNZIP=16
+  def FAILED_WUM_UPDATE=10
+  def FAILED_WUM_ADD=11
+  def FAILED_INPLACE_UPDATES=12
+  def FAILED_PUPPET_APPLY=13
+  def FAILED_TO_MOVE_WUMMED_PRODUCT=14
+  def FAILED_UNZIP=15
+  def FAILED_RM_UNZIP=16
 
   sh """
     echo "Adding the product - ${PRODUCT}-${PRODUCT_VERSION}..." &>> wum.log
-    ${WUM} add ${PRODUCT}-${PRODUCT_VERSION} -y  -v &>> wum.log
+    ${WUM} add ${PRODUCT}-${PRODUCT_VERSION} -y &>> wum.log
     if [ $? -eq 0 ] ; then
       echo "${PRODUCT}-${PRODUCT_VERSION} successfully added..." &>> wum.log
     else
