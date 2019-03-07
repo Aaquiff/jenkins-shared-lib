@@ -38,7 +38,7 @@ def call(Map config) {
   FAILED_UNZIP=15
   FAILED_RM_UNZIP=16
 
-  int status = sh ( script: """
+  sh """
     echo "Adding the product - ${PRODUCT}-${PRODUCT_VERSION}..." &>> wum.log
     ${WUM} add ${PRODUCT}-${PRODUCT_VERSION} -y  -v &>> wum.log
     if [ $? -eq 0 ] ; then
@@ -79,10 +79,6 @@ def call(Map config) {
       echo "Failed to remove the zipped product ${PRODUCT}-${PRODUCT_VERSION}..."
       exit ${FAILED_RM_UNZIP}
     fi
-  """,
-  returnStatus: true
-  )
-
-  sh "echo ${status}"
+  """
 
 }
